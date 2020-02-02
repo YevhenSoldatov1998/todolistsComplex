@@ -1,15 +1,15 @@
 import React from 'react';
-import './App.css';
+import '../../App.css';
 import {useState} from 'react'
 const TodoListTask = props => {
     const [editMode, setEditMode] = useState(false);
 
     const onIsDoneChanged = (e) => {
-        props.changeIsDone(props.todoId, e.currentTarget.checked);
+        props.changeIsDone(props.todoId, props.task.id);
     }
 
-    const onTitleChanged = (e) => {
-        // props.changeTitle(props.task.id, e.currentTarget.value);
+    const call_changeTitleTask = (e) => {
+        props.changeTitleTask(props.todoId, props.task.id, e.currentTarget.value);
     }
 
     const activateEditMode = () => {
@@ -29,7 +29,7 @@ const TodoListTask = props => {
                     <input type="checkbox" checked={props.task.isDone}
                            onChange={onIsDoneChanged}/>
                     { editMode
-                        ? <input onBlur={deactivateEditMode} onChange={onTitleChanged} autoFocus={true} value={props.task.title} />
+                        ? <input onBlur={deactivateEditMode} onChange={call_changeTitleTask} autoFocus={true} value={props.task.title} />
                         : <span onClick={activateEditMode}>{props.task.id} - {props.task.title}</span>
                     }, priority: {props.task.priority}
                 </div>

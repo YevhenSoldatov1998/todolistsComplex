@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {useState} from 'react'
 
-const AddNewItemForm = ({addTodo}) => {
+const AddNewItemForm = ({addTodo, todoId , ...props}) => {
     const [error, setError] = useState(false);
     const [title, setTitle] = useState("");
 
