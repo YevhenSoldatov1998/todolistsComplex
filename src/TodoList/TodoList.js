@@ -5,7 +5,7 @@ import AddNewItemForm from "../AddNewItemForm";
 import TodoListTasks from "./TodoListTasks";
 import {useState} from 'react'
 
-const TodoList = (props) => {
+const TodoList = ({deleteTask, ...props}) => {
     let [id, setId] = useState(3);
     const call_addTask = (title) => {
         setId(id + 1);
@@ -26,6 +26,7 @@ const TodoList = (props) => {
                            todoId={props.todoId}
                            changeIsDone = {props.changeIsDone}
                            changeTitleTask={props.changeTitleTask}
+                           deleteTask={deleteTask}
             />
             {/*<TodoListFooter changeFilter={props.changeFilter} filterValue={props.filterValue}/>*/}
         </div>

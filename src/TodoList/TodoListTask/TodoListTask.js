@@ -1,39 +1,44 @@
 import React from 'react';
 import '../../App.css';
 import {useState} from 'react'
-const TodoListTask = props => {
+
+const TodoListTask = ({deleteTask, todoId, task, ...props}) => {
     const [editMode, setEditMode] = useState(false);
 
     const onIsDoneChanged = (e) => {
-        props.changeIsDone(props.todoId, props.task.id);
-    }
+        props.changeIsDone(todoId, task.id);
+    };
 
     const call_changeTitleTask = (e) => {
-        props.changeTitleTask(props.todoId, props.task.id, e.currentTarget.value);
-    }
+        props.changeTitleTask(todoId, task.id, e.currentTarget.value);
+    };
 
     const activateEditMode = () => {
         setEditMode(true);
-    }
+    };
 
-    const deactivateEditMode= () => {
+    const deactivateEditMode = () => {
         setEditMode(false);
+    };
+    const call_deleteTask = () => {
+        deleteTask(todoId, task.id)
     }
 
 
+    let containerCssClass = task.isDone ? "todoList-task done" : "todoList-task";
 
-        let containerCssClass = props.task.isDone ? "todoList-task done" : "todoList-task";
-
-        return (
-                <div className={containerCssClass}>
-                    <input type="checkbox" checked={props.task.isDone}
-                           onChange={onIsDoneChanged}/>
-                    { editMode
-                        ? <input onBlur={deactivateEditMode} onChange={call_changeTitleTask} autoFocus={true} value={props.task.title} />
-                        : <span onClick={activateEditMode}>{props.task.id} - {props.task.title}</span>
-                    }, priority: {props.task.priority}
-                </div>
-        );
+    return (
+        <div className={containerCssClass}>
+            <input type="checkbox" checked={task.isDone}
+                   onChange={onIsDoneChanged}/>
+            {editMode
+                ?
+                <input onBlur={deactivateEditMode} onChange={call_changeTitleTask} autoFocus={true} value={task.title}/>
+                : <span onClick={activateEditMode}>{task.id} - {task.title}</span>
+            }, priority: {task.priority}
+            <button onClick={call_deleteTask}>&times;</button>
+        </div>
+    );
 }
 
 export default TodoListTask;

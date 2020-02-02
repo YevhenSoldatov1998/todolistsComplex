@@ -4,10 +4,11 @@ import TodoList from "./TodoList/TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {addTask, addTodoList, changeIsDone, changeTitleTask, deleteTodoList} from "./redux/todo-reducer";
+import {addTask, addTodoList, changeIsDone, changeTitleTask, deleteTask, deleteTodoList} from "./redux/todo-reducer";
 import {useState} from 'react'
 
-const App = ({addTodoList, todoLists, deleteTodoList, addTask ,changeIsDone , changeTitleTask}) => {
+const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, changeTitleTask , deleteTask}) => {
+    debugger
     const [nextTodoListId, setNextTodoListId] = useState(3);
     const call_addTodoList = (title) => {
         let newTodoList = {
@@ -35,6 +36,7 @@ const App = ({addTodoList, todoLists, deleteTodoList, addTask ,changeIsDone , ch
                                      addTask={addTask}
                                      changeIsDone={changeIsDone}
                                      changeTitleTask={changeTitleTask}
+                                     deleteTask = {deleteTask}
 
                     />
                 })}
@@ -50,6 +52,9 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {addTodoList, deleteTodoList, changeIsDone, addTask, changeTitleTask})
+    connect(mapStateToProps, {
+        addTodoList, deleteTodoList, changeIsDone,
+        addTask, changeTitleTask, deleteTask
+    })
 )(App);
 

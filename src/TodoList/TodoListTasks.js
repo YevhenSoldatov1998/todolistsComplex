@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import TodoListTask from "./TodoListTask/TodoListTask";
 
-const TodoListTasks = (props) => {
+const TodoListTasks = ({deleteTask,...props}) => {
     return (
         <div className="todoList-tasks">
             {props.tasks.map(task => {
@@ -12,6 +12,8 @@ const TodoListTasks = (props) => {
                     changeIsDone={props.changeIsDone}
                     todoId={props.todoId}
                     changeTitleTask={props.changeTitleTask}
+                    deleteTask={deleteTask}
+
 
                 />
             })}
