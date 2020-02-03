@@ -4,17 +4,26 @@ import TodoList from "./TodoList/TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {addTask, addTodoList, changeIsDone, changeTitleTask, deleteTask, deleteTodoList} from "./redux/todo-reducer";
+import {
+    addTask,
+    addTodoList,
+    changeFilter,
+    changeIsDone,
+    changeTitleTask,
+    deleteTask,
+    deleteTodoList
+} from "./redux/todo-reducer";
 import {useState} from 'react'
 
-const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, changeTitleTask , deleteTask}) => {
+const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, changeTitleTask , deleteTask, filterValue, changeFilter}) => {
     debugger
     const [nextTodoListId, setNextTodoListId] = useState(3);
     const call_addTodoList = (title) => {
         let newTodoList = {
             id: nextTodoListId,
             title: title,
-            tasks: []
+            tasks: [],
+            filterValue: 'All'
         };
         setNextTodoListId(nextTodoListId + 1);
         addTodoList(newTodoList);
@@ -37,6 +46,8 @@ const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, cha
                                      changeIsDone={changeIsDone}
                                      changeTitleTask={changeTitleTask}
                                      deleteTask = {deleteTask}
+                                     filterValue={filterValue}
+                                     changeFilter={changeFilter}
 
                     />
                 })}
@@ -54,7 +65,8 @@ let mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, {
         addTodoList, deleteTodoList, changeIsDone,
-        addTask, changeTitleTask, deleteTask
+        addTask, changeTitleTask, deleteTask,
+        changeFilter
     })
 )(App);
 

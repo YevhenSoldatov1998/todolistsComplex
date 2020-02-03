@@ -4,13 +4,16 @@ const CHANGE_IS_DONE = 'CHANGE_IS_DONE';
 const ADD_TASK = 'ADD_TASK';
 const CHANGE_TITLE_TASK = 'CHANGE_TITLE_TASK';
 const DELETE_TASK = 'DELETE_TASK';
+const CHANGE_FILTER = 'CHANGE_FILTER';
 
 export const addTodoList = (newTodo) => ({type: ADD_TODO_LIST, newTodo});
 export const deleteTodoList = (todoId) => ({type: DELETE_TODO_LIST, todoId});
 export const changeIsDone = (todoId, taskId) => ({type: CHANGE_IS_DONE, todoId, taskId});
 export const addTask = (task, todoId) => ({type: ADD_TASK, task, todoId});
 export const changeTitleTask = (todoId, taskId, body) => ({type: CHANGE_TITLE_TASK, todoId, taskId, body});
-export const deleteTask = (todoId, taskId) => ({type: DELETE_TASK, todoId, taskId   });
+export const deleteTask = (todoId, taskId) => ({type: DELETE_TASK, todoId, taskId});
+export const changeFilter = (value, todoId) => ({type: CHANGE_FILTER, value, todoId});
+
 const initialState = {
     todoLists: [
         {
@@ -19,7 +22,8 @@ const initialState = {
             tasks: [
                 {id: 0, title: "d", isDone: false, priority: "low"},
                 {id: 1, title: "d", isDone: false, priority: "low"}
-            ]
+            ],
+            filterValue: 'All'
 
         },
         {
@@ -28,7 +32,8 @@ const initialState = {
             tasks: [
                 {id: 0, title: "d", isDone: false, priority: "low"},
                 {id: 1, title: "d", isDone: false, priority: "low"}
-            ]
+            ],
+            filterValue: 'All'
 
         }
     ]
@@ -83,15 +88,16 @@ export const todoReducer = (state = initialState, action) => {
                 ...state,
                 todoLists: [...state.todoLists.map(el => {
                     if (el.id === action.todoId) {
-                        return {...el , tasks: el.tasks.map(task => {
-                            if (task.id === action.taskId) {
-                                debugger
-                                return {...task, title: action.body}
-                            } else return {...task}
+                        return {
+                            ...el, tasks: el.tasks.map(task => {
+                                if (task.id === action.taskId) {
+                                    debugger
+                                    return {...task, title: action.body}
+                                } else return {...task}
 
-                        })}
-                    }
-                    else {
+                            })
+                        }
+                    } else {
                         return {...el}
                     }
                 })]
@@ -100,14 +106,26 @@ export const todoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 todoLists: state.todoLists.map(objItem => {
-                    if(objItem.id === action.todoId){
+                    if (objItem.id === action.todoId) {
                         return {
                             ...objItem,
-                            tasks: objItem.tasks.filter(el=> el.id !== action.taskId)
+                            tasks: objItem.tasks.filter(el => el.id !== action.taskId)
                         }
 
-                    }
-                    else return {...objItem}
+                    } else return {...objItem}
+                })
+            }
+        case CHANGE_FILTER:
+
+            return {
+                ...state,
+                todoLists: state.todoLists.map(objItem => {
+                    if (objItem.id === action.todoId) {
+                        return {
+                            ...objItem,
+                            filterValue: action.value
+                        }
+                    } else return {...objItem}
                 })
             }
         default:
