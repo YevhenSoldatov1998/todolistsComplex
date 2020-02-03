@@ -7,6 +7,7 @@ import {useState} from 'react'
 import TodoListFooter from "./TodoListFooter";
 
 const TodoList = ({changeFilter, deleteTask, filterValue, todoId, tasks, changeIsDone, changeTitleTask, title, addTask, deleteTodoList}) => {
+    debugger
     let [id, setId] = useState(3);
     const call_addTask = (title) => {
         setId(id + 1);
@@ -23,7 +24,11 @@ const TodoList = ({changeFilter, deleteTask, filterValue, todoId, tasks, changeI
                 <TodoListTitle title={title}/>
                 <AddNewItemForm addTodo={call_addTask}/>
             </div>
-            <TodoListTasks tasks={tasks}
+            <TodoListTasks tasks={tasks.filter(task =>
+                (filterValue === 'All') ? task
+                    : (filterValue === 'Completed') ? task.isDone
+                    : (filterValue === 'Active') ? !task.isDone : false)}
+
                            todoId={todoId}
                            changeIsDone={changeIsDone}
                            changeTitleTask={changeTitleTask}

@@ -15,7 +15,8 @@ import {
 } from "./redux/todo-reducer";
 import {useState} from 'react'
 
-const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, changeTitleTask , deleteTask, filterValue, changeFilter}) => {
+const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, changeTitleTask , deleteTask, changeFilter}) => {
+
     debugger
     const [nextTodoListId, setNextTodoListId] = useState(3);
     const call_addTodoList = (title) => {
@@ -41,12 +42,12 @@ const App = ({addTodoList, todoLists, deleteTodoList, addTask, changeIsDone, cha
                                      key={tl.id}
                                      tasks={tl.tasks}
                                      title={tl.title}
+                                     filterValue={tl.filterValue}
                                      deleteTodoList={deleteTodoList}
                                      addTask={addTask}
                                      changeIsDone={changeIsDone}
                                      changeTitleTask={changeTitleTask}
                                      deleteTask = {deleteTask}
-                                     filterValue={filterValue}
                                      changeFilter={changeFilter}
 
                     />
