@@ -6,13 +6,13 @@ const CHANGE_TITLE_TASK = 'CHANGE_TITLE_TASK';
 const DELETE_TASK = 'DELETE_TASK';
 const CHANGE_FILTER = 'CHANGE_FILTER';
 
-export const addTodoList = (newTodo) => ({type: ADD_TODO_LIST, newTodo});
-export const deleteTodoList = (todoId) => ({type: DELETE_TODO_LIST, todoId});
-export const changeIsDone = (todoId, taskId) => ({type: CHANGE_IS_DONE, todoId, taskId});
-export const addTask = (task, todoId) => ({type: ADD_TASK, task, todoId});
-export const changeTitleTask = (todoId, taskId, body) => ({type: CHANGE_TITLE_TASK, todoId, taskId, body});
-export const deleteTask = (todoId, taskId) => ({type: DELETE_TASK, todoId, taskId});
-export const changeFilter = (todoId, value) => ({type: CHANGE_FILTER, todoId, value});
+export const addTodoList = (newTodo: any) => ({type: ADD_TODO_LIST, newTodo});
+export const deleteTodoList = (todoId: number) => ({type: DELETE_TODO_LIST, todoId});
+export const changeIsDone = (todoId: number, taskId: number) => ({type: CHANGE_IS_DONE, todoId, taskId});
+export const addTask = (task: any, todoId: number) => ({type: ADD_TASK, task, todoId});
+export const changeTitleTask = (todoId: number, taskId: number, body: string) => ({type: CHANGE_TITLE_TASK, todoId, taskId, body});
+export const deleteTask = (todoId: number, taskId: number) => ({type: DELETE_TASK, todoId, taskId});
+export const changeFilter = (todoId: number, value: boolean) => ({type: CHANGE_FILTER, todoId, value});
 const initialState = {
     todoLists: [
         {
@@ -37,7 +37,7 @@ const initialState = {
     ]
 };
 
-export const todoReducer = (state = initialState, action) => {
+export const todoReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_TODO_LIST:
             return {

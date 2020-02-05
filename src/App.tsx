@@ -15,14 +15,25 @@ import {
 } from "./redux/todo-reducer";
 import {useState} from 'react'
 
-const App = ({
-                 addTodoList, todoLists,
-                 deleteTodoList, addTask,
-                 changeIsDone, changeTitleTask,
-                 deleteTask, changeFilter
-             }) => {
+interface IProps {
+    addTodoList: Function,
+    deleteTodoList: Function,
+    changeIsDone: Function,
+    addTask: Function,
+    changeTitleTask: Function,
+    deleteTask: Function,
+    changeFilter: Function,
+    todoLists: any,
+}
+
+const App: React.FC<IProps> = ({
+                                   addTodoList, todoLists,
+                                   deleteTodoList, addTask,
+                                   changeIsDone, changeTitleTask,
+                                   deleteTask, changeFilter
+                               }) => {
     const [nextTodoListId, setNextTodoListId] = useState(3);
-    const call_addTodoList = (title) => {
+    const call_addTodoList = (title: string) => {
         let newTodoList = {
             id: nextTodoListId,
             title: title,
@@ -39,7 +50,7 @@ const App = ({
                 <AddNewItemForm addTodo={call_addTodoList}/>
             </div>
             <div className="App">
-                {todoLists.map(tl => {
+                {todoLists.map((tl: any) => {
                     return <TodoList todoId={tl.id}
                                      key={tl.id}
                                      tasks={tl.tasks}
@@ -59,7 +70,7 @@ const App = ({
     );
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: any) => {
     return {
         todoLists: state.todo.todoLists
     }

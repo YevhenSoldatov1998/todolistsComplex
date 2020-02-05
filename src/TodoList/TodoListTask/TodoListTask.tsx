@@ -1,29 +1,30 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import '../../App.css';
 import {useState} from 'react'
 
-const TodoListTask = ({deleteTask, todoId, task, ...props}) => {
+interface IProps {
+    deleteTask: Function,
+    changeIsDone: Function,
+    todoId: number,
+    task: any,
+    changeTitleTask: Function
+
+}
+
+const TodoListTask: React.FC<IProps> = ({deleteTask, changeIsDone,changeTitleTask, todoId, task, ...props}) => {
     const [editMode, setEditMode] = useState(false);
 
-    const onIsDoneChanged = (e) => {
-        props.changeIsDone(todoId, task.id);
+    const onIsDoneChanged = () => {
+        changeIsDone(todoId, task.id);
     };
 
-    const call_changeTitleTask = (e) => {
-        props.changeTitleTask(todoId, task.id, e.currentTarget.value);
-    };
+    const call_changeTitleTask = (e: ChangeEvent<HTMLInputElement>) => changeTitleTask(todoId, task.id, e.currentTarget.value);
 
-    const activateEditMode = () => {
-        setEditMode(true);
-    };
+    const activateEditMode = () => setEditMode(true);
 
-    const deactivateEditMode = () => {
-        setEditMode(false);
-    };
-    const call_deleteTask = () => {
-        deleteTask(todoId, task.id)
-    }
+    const deactivateEditMode = () => setEditMode(false);
 
+    const call_deleteTask = () => deleteTask(todoId, task.id);
 
     let containerCssClass = task.isDone ? "todoList-task done" : "todoList-task";
 

@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
 import {useState} from 'react'
-
-const AddNewItemForm = ({addTodo, todoId , ...props}) => {
+interface IAddNewItemForm {
+    addTodo: any,
+}
+const AddNewItemForm: React.FC<IAddNewItemForm> = ({addTodo}) => {
     const [error, setError] = useState(false);
     const [title, setTitle] = useState("");
 
@@ -15,7 +17,7 @@ const AddNewItemForm = ({addTodo, todoId , ...props}) => {
             addTodo(title);
         }
     };
-    const onTitleChanged = e => {
+    const onTitleChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
         let body = e.target.value;
         if(body) setError(false);
         setTitle(body);
