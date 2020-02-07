@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import TodoList from "./TodoList/TodoList";
 import AddNewItemForm from "./AddNewItemForm";
@@ -11,7 +11,7 @@ import {
     changeIsDone,
     changeTitleTask,
     deleteTask,
-    deleteTodoList
+    deleteTodoList, getTodoListsThunk
 } from "./redux/todo-reducer";
 import {useState} from 'react'
 
@@ -23,6 +23,7 @@ interface IProps {
     changeTitleTask: Function,
     deleteTask: Function,
     changeFilter: Function,
+    getTodoListsThunk: Function
     todoLists: any,
 }
 
@@ -30,7 +31,7 @@ const App: React.FC<IProps> = ({
                                    addTodoList, todoLists,
                                    deleteTodoList, addTask,
                                    changeIsDone, changeTitleTask,
-                                   deleteTask, changeFilter
+                                   deleteTask, changeFilter, ...props
                                }) => {
     const [nextTodoListId, setNextTodoListId] = useState(3);
     const call_addTodoList = (title: string) => {
@@ -42,7 +43,10 @@ const App: React.FC<IProps> = ({
         setNextTodoListId(nextTodoListId + 1);
         addTodoList(newTodoList);
     };
-
+    useEffect(() => {
+        props.getTodoListsThunk();
+        debugger
+    }, []);
 
     return (
         <>
@@ -53,7 +57,7 @@ const App: React.FC<IProps> = ({
                 {todoLists.map((tl: any) => {
                     return <TodoList todoId={tl.id}
                                      key={tl.id}
-                                     tasks={tl.tasks}
+                                     tasks={tl.tasks = []}
                                      title={tl.title}
                                      filterValue={tl.filterValue}
                                      deleteTodoList={deleteTodoList}
@@ -80,7 +84,7 @@ export default compose(
     connect(mapStateToProps, {
         addTodoList, deleteTodoList, changeIsDone,
         addTask, changeTitleTask, deleteTask,
-        changeFilter
+        changeFilter,getTodoListsThunk
     })
 )(App);
 

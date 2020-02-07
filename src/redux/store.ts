@@ -1,8 +1,12 @@
-import {combineReducers, createStore} from "redux";
+import {combineReducers, createStore, compose , applyMiddleware} from "redux";
 import {todoReducer} from "./todo-reducer";
-import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 let reducers = combineReducers({
     todo: todoReducer,
-})
-export let store = createStore(reducers, composeWithDevTools());
+});
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export let store = createStore(reducers, composeEnhancers(
+    applyMiddleware(thunk)
+));

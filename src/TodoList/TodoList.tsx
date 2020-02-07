@@ -21,11 +21,14 @@ interface ITodoList {
 
 const TodoList: React.FC<ITodoList> = ({
                                            title,
+
+
                                            deleteTodoList, changeIsDone, deleteTask,
                                            addTask, tasks, filterValue,
                                            changeTitleTask,changeFilter,
                                            todoId, ...props
                                        }) => {
+    debugger
     let [id, setId] = useState(3);
     const call_addTask = (title: string) => {
         setId(id + 1);
