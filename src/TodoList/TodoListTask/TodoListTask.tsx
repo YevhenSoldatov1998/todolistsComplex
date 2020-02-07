@@ -24,7 +24,8 @@ const TodoListTask: React.FC<IProps> = ({deleteTask, changeIsDone,changeTitleTas
 
     const deactivateEditMode = () => setEditMode(false);
 
-    const call_deleteTask = () => deleteTask(todoId, task.id);
+    const call_deleteTask = () => {
+        deleteTask(todoId, task.id)};
 
     let containerCssClass = task.isDone ? "todoList-task done" : "todoList-task";
 

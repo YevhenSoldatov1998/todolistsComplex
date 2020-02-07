@@ -6,46 +6,39 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {
     addTask,
-    addTodoList,
+    addTodoListThunk,
     changeFilter,
     changeIsDone,
     changeTitleTask,
-    deleteTask,
-    deleteTodoList, getTodoListsThunk
+    deleteTodoList, deleteTodoListThunk, getTodoListsThunk
 } from "./redux/todo-reducer";
 import {useState} from 'react'
 
 interface IProps {
-    addTodoList: Function,
+    addTodoListThunk: Function,
     deleteTodoList: Function,
     changeIsDone: Function,
     addTask: Function,
     changeTitleTask: Function,
-    deleteTask: Function,
     changeFilter: Function,
+
     getTodoListsThunk: Function
+    deleteTodoListThunk: Function,
     todoLists: any,
 }
 
 const App: React.FC<IProps> = ({
-                                   addTodoList, todoLists,
+                                   addTodoListThunk, todoLists,
                                    deleteTodoList, addTask,
                                    changeIsDone, changeTitleTask,
-                                   deleteTask, changeFilter, ...props
+                                   deleteTodoListThunk, changeFilter, ...props
                                }) => {
-    const [nextTodoListId, setNextTodoListId] = useState(3);
     const call_addTodoList = (title: string) => {
-        let newTodoList = {
-            id: nextTodoListId,
-            title: title,
-            tasks: []
-        };
-        setNextTodoListId(nextTodoListId + 1);
-        addTodoList(newTodoList);
+        addTodoListThunk(title);
     };
+
     useEffect(() => {
         props.getTodoListsThunk();
-        debugger
     }, []);
 
     return (
@@ -64,7 +57,7 @@ const App: React.FC<IProps> = ({
                                      addTask={addTask}
                                      changeIsDone={changeIsDone}
                                      changeTitleTask={changeTitleTask}
-                                     deleteTask={deleteTask}
+                                     deleteTodoListThunk={deleteTodoListThunk}
                                      changeFilter={changeFilter}
 
                     />
@@ -82,9 +75,10 @@ let mapStateToProps = (state: any) => {
 
 export default compose(
     connect(mapStateToProps, {
-        addTodoList, deleteTodoList, changeIsDone,
-        addTask, changeTitleTask, deleteTask,
-        changeFilter,getTodoListsThunk
+        deleteTodoList, changeIsDone,
+        addTask, changeTitleTask,
+        changeFilter,getTodoListsThunk, deleteTodoListThunk,
+        addTodoListThunk
     })
 )(App);
 

@@ -6,27 +6,44 @@ const DELETE_TODO_LIST = 'DELETE_TODO_LIST';
 const CHANGE_IS_DONE = 'CHANGE_IS_DONE';
 const ADD_TASK = 'ADD_TASK';
 const CHANGE_TITLE_TASK = 'CHANGE_TITLE_TASK';
-const DELETE_TASK = 'DELETE_TASK';
 const CHANGE_FILTER = 'CHANGE_FILTER';
 
 const SET_TODO_LISTS = 'SET_TODO_LISTS';
+const DELETE_TASK = 'DELETE_TASK';
 
-export const addTodoList = (newTodo: any) => ({type: ADD_TODO_LIST, newTodo});
-export const deleteTodoList = (todoId: number) => ({type: DELETE_TODO_LIST, todoId});
+const addTodoList = (newTodo: any) => ({type: ADD_TODO_LIST, newTodo});
+export const deleteTodoList = (todoId: string) => ({type: DELETE_TODO_LIST, todoId});
 export const changeIsDone = (todoId: number, taskId: number) => ({type: CHANGE_IS_DONE, todoId, taskId});
 export const addTask = (task: any, todoId: number) => ({type: ADD_TASK, task, todoId});
 export const changeTitleTask = (todoId: number, taskId: number, body: string) => ({type: CHANGE_TITLE_TASK, todoId, taskId, body});
-export const deleteTask = (todoId: number, taskId: number) => ({type: DELETE_TASK, todoId, taskId});
+// export const deleteTask = (todoId: number, taskId: number) => ({type: DELETE_TASK, todoId, taskId});
 export const changeFilter = (todoId: number, value: boolean) => ({type: CHANGE_FILTER, todoId, value});
 const setTodoLists = (todoLists: any) => ({type: SET_TODO_LISTS,  todoLists});
-export const getTodoListsThunk = () => (dispatch:Function)=> {
-    todoListAPI.getTodoList().then(res=> {
-        debugger
-        dispatch(setTodoLists(res.data))
 
+export const getTodoListsThunk = () => (dispatch: Function) => {
+    todoListAPI.getTodoLists().then(res => {
+        dispatch(setTodoLists(res.data))
+    })
+};
+export const deleteTodoListThunk = (todoListId: string)=> (dispatch: Function) => {
+    todoListAPI.deleteTodoListItem(todoListId)
+        .then(res => {
+            if(res.data.resultCode === 0){
+                dispatch(deleteTodoList(todoListId))
+            }
+            else{
+                alert('error')
+            }
+
+        })
+}
+export const addTodoListThunk = (title: string) => (dispatch: Function) => {
+    todoListAPI.addTodoLists(title).then(res=> {
+        if(res.data.resultCode === 0){
+            dispatch(addTodoList(res.data.data.item))
+        }
     })
 }
-
 const initialState: IState= {
     todoLists: []
 };
@@ -88,7 +105,6 @@ export const todoReducer = (state = initialState, action: any) => {
         //                 return {
         //                     ...el, tasks: el.tasks.map(task => {
         //                         if (task.id === action.taskId) {
-        //                             debugger
         //                             return {...task, title: action.body}
         //                         } else return {...task}
         //

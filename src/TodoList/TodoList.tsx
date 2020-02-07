@@ -7,7 +7,7 @@ import {useState} from 'react'
 import TodoListFooter from "./TodoListFooter";
 
 interface ITodoList {
-    deleteTask: Function,
+    deleteTodoListThunk: Function,
     addTask: Function,
     deleteTodoList: Function,
     changeTitleTask: Function,
@@ -21,14 +21,11 @@ interface ITodoList {
 
 const TodoList: React.FC<ITodoList> = ({
                                            title,
-
-
-                                           deleteTodoList, changeIsDone, deleteTask,
+                                           changeIsDone, deleteTodoListThunk,
                                            addTask, tasks, filterValue,
                                            changeTitleTask,changeFilter,
                                            todoId, ...props
                                        }) => {
-    debugger
     let [id, setId] = useState(3);
     const call_addTask = (title: string) => {
         setId(id + 1);
@@ -36,7 +33,7 @@ const TodoList: React.FC<ITodoList> = ({
         addTask(task, todoId)
     };
     const call_deleteTodoList = () => {
-        deleteTodoList(todoId)
+        deleteTodoListThunk(todoId)
     }
     return (
         <div className="todoList">
@@ -57,7 +54,7 @@ const TodoList: React.FC<ITodoList> = ({
                            todoId={todoId}
                            changeIsDone={changeIsDone}
                            changeTitleTask={changeTitleTask}
-                           deleteTask={deleteTask}
+                           deleteTask={()=>{}}
 
             />
             <TodoListFooter todoId={todoId}
